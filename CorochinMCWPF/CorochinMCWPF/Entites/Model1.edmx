@@ -1,0 +1,496 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CorochinMCDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Component">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="IsArchived" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ComponentOfOrder">
+          <Key>
+            <PropertyRef Name="ComponentId" />
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="ComponentId" Type="int" Nullable="false" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ComponentOfWorkPlace">
+          <Key>
+            <PropertyRef Name="WorkPlaceId" />
+            <PropertyRef Name="ComponentId" />
+          </Key>
+          <Property Name="WorkPlaceId" Type="int" Nullable="false" />
+          <Property Name="ComponentId" Type="int" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstNameClient" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastNameClient" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="OrderStatusId" Type="int" Nullable="false" />
+          <Property Name="DateOfCreation" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="50" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkPlace">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ComponentOfOrder_Component">
+          <End Role="Component" Type="Self.Component" Multiplicity="1" />
+          <End Role="ComponentOfOrder" Type="Self.ComponentOfOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Component">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ComponentOfOrder">
+              <PropertyRef Name="ComponentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ComponentOfOrder_Order">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="ComponentOfOrder" Type="Self.ComponentOfOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ComponentOfOrder">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ComponentOfWorkPlace_Component">
+          <End Role="Component" Type="Self.Component" Multiplicity="1" />
+          <End Role="ComponentOfWorkPlace" Type="Self.ComponentOfWorkPlace" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Component">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ComponentOfWorkPlace">
+              <PropertyRef Name="ComponentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ComponentOfWorkPlace_WorkPlace">
+          <End Role="WorkPlace" Type="Self.WorkPlace" Multiplicity="1" />
+          <End Role="ComponentOfWorkPlace" Type="Self.ComponentOfWorkPlace" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkPlace">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ComponentOfWorkPlace">
+              <PropertyRef Name="WorkPlaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_OrderStatus">
+          <End Role="OrderStatus" Type="Self.OrderStatus" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="OrderStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CorochinMCDBModelStoreContainer">
+          <EntitySet Name="Component" EntityType="Self.Component" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ComponentOfOrder" EntityType="Self.ComponentOfOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ComponentOfWorkPlace" EntityType="Self.ComponentOfWorkPlace" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderStatus" EntityType="Self.OrderStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkPlace" EntityType="Self.WorkPlace" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ComponentOfOrder_Component" Association="Self.FK_ComponentOfOrder_Component">
+            <End Role="Component" EntitySet="Component" />
+            <End Role="ComponentOfOrder" EntitySet="ComponentOfOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ComponentOfOrder_Order" Association="Self.FK_ComponentOfOrder_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="ComponentOfOrder" EntitySet="ComponentOfOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ComponentOfWorkPlace_Component" Association="Self.FK_ComponentOfWorkPlace_Component">
+            <End Role="Component" EntitySet="Component" />
+            <End Role="ComponentOfWorkPlace" EntitySet="ComponentOfWorkPlace" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ComponentOfWorkPlace_WorkPlace" Association="Self.FK_ComponentOfWorkPlace_WorkPlace">
+            <End Role="WorkPlace" EntitySet="WorkPlace" />
+            <End Role="ComponentOfWorkPlace" EntitySet="ComponentOfWorkPlace" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_OrderStatus" Association="Self.FK_Order_OrderStatus">
+            <End Role="OrderStatus" EntitySet="OrderStatus" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_User" Association="Self.FK_Order_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CorochinMCDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="CorochinMCDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Component" EntityType="CorochinMCDBModel.Component" />
+          <EntitySet Name="ComponentOfOrder" EntityType="CorochinMCDBModel.ComponentOfOrder" />
+          <EntitySet Name="ComponentOfWorkPlace" EntityType="CorochinMCDBModel.ComponentOfWorkPlace" />
+          <EntitySet Name="Order" EntityType="CorochinMCDBModel.Order" />
+          <EntitySet Name="OrderStatus" EntityType="CorochinMCDBModel.OrderStatus" />
+          <EntitySet Name="sysdiagrams" EntityType="CorochinMCDBModel.sysdiagrams" />
+          <EntitySet Name="User" EntityType="CorochinMCDBModel.User" />
+          <EntitySet Name="WorkPlace" EntityType="CorochinMCDBModel.WorkPlace" />
+          <AssociationSet Name="FK_ComponentOfOrder_Component" Association="CorochinMCDBModel.FK_ComponentOfOrder_Component">
+            <End Role="Component" EntitySet="Component" />
+            <End Role="ComponentOfOrder" EntitySet="ComponentOfOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ComponentOfWorkPlace_Component" Association="CorochinMCDBModel.FK_ComponentOfWorkPlace_Component">
+            <End Role="Component" EntitySet="Component" />
+            <End Role="ComponentOfWorkPlace" EntitySet="ComponentOfWorkPlace" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ComponentOfOrder_Order" Association="CorochinMCDBModel.FK_ComponentOfOrder_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="ComponentOfOrder" EntitySet="ComponentOfOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ComponentOfWorkPlace_WorkPlace" Association="CorochinMCDBModel.FK_ComponentOfWorkPlace_WorkPlace">
+            <End Role="WorkPlace" EntitySet="WorkPlace" />
+            <End Role="ComponentOfWorkPlace" EntitySet="ComponentOfWorkPlace" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_OrderStatus" Association="CorochinMCDBModel.FK_Order_OrderStatus">
+            <End Role="OrderStatus" EntitySet="OrderStatus" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_User" Association="CorochinMCDBModel.FK_Order_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Component">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <Property Name="IsArchived" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ComponentOfOrder" Relationship="CorochinMCDBModel.FK_ComponentOfOrder_Component" FromRole="Component" ToRole="ComponentOfOrder" />
+          <NavigationProperty Name="ComponentOfWorkPlace" Relationship="CorochinMCDBModel.FK_ComponentOfWorkPlace_Component" FromRole="Component" ToRole="ComponentOfWorkPlace" />
+        </EntityType>
+        <EntityType Name="ComponentOfOrder">
+          <Key>
+            <PropertyRef Name="ComponentId" />
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="ComponentId" Type="Int32" Nullable="false" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Component" Relationship="CorochinMCDBModel.FK_ComponentOfOrder_Component" FromRole="ComponentOfOrder" ToRole="Component" />
+          <NavigationProperty Name="Order" Relationship="CorochinMCDBModel.FK_ComponentOfOrder_Order" FromRole="ComponentOfOrder" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="ComponentOfWorkPlace">
+          <Key>
+            <PropertyRef Name="WorkPlaceId" />
+            <PropertyRef Name="ComponentId" />
+          </Key>
+          <Property Name="WorkPlaceId" Type="Int32" Nullable="false" />
+          <Property Name="ComponentId" Type="Int32" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Component" Relationship="CorochinMCDBModel.FK_ComponentOfWorkPlace_Component" FromRole="ComponentOfWorkPlace" ToRole="Component" />
+          <NavigationProperty Name="WorkPlace" Relationship="CorochinMCDBModel.FK_ComponentOfWorkPlace_WorkPlace" FromRole="ComponentOfWorkPlace" ToRole="WorkPlace" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstNameClient" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastNameClient" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="OrderStatusId" Type="Int32" Nullable="false" />
+          <Property Name="DateOfCreation" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="ComponentOfOrder" Relationship="CorochinMCDBModel.FK_ComponentOfOrder_Order" FromRole="Order" ToRole="ComponentOfOrder" />
+          <NavigationProperty Name="OrderStatus" Relationship="CorochinMCDBModel.FK_Order_OrderStatus" FromRole="Order" ToRole="OrderStatus" />
+          <NavigationProperty Name="User" Relationship="CorochinMCDBModel.FK_Order_User" FromRole="Order" ToRole="User" />
+        </EntityType>
+        <EntityType Name="OrderStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Order" Relationship="CorochinMCDBModel.FK_Order_OrderStatus" FromRole="OrderStatus" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Order" Relationship="CorochinMCDBModel.FK_Order_User" FromRole="User" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="WorkPlace">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ComponentOfWorkPlace" Relationship="CorochinMCDBModel.FK_ComponentOfWorkPlace_WorkPlace" FromRole="WorkPlace" ToRole="ComponentOfWorkPlace" />
+        </EntityType>
+        <Association Name="FK_ComponentOfOrder_Component">
+          <End Type="CorochinMCDBModel.Component" Role="Component" Multiplicity="1" />
+          <End Type="CorochinMCDBModel.ComponentOfOrder" Role="ComponentOfOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Component">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ComponentOfOrder">
+              <PropertyRef Name="ComponentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ComponentOfWorkPlace_Component">
+          <End Type="CorochinMCDBModel.Component" Role="Component" Multiplicity="1" />
+          <End Type="CorochinMCDBModel.ComponentOfWorkPlace" Role="ComponentOfWorkPlace" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Component">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ComponentOfWorkPlace">
+              <PropertyRef Name="ComponentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ComponentOfOrder_Order">
+          <End Type="CorochinMCDBModel.Order" Role="Order" Multiplicity="1" />
+          <End Type="CorochinMCDBModel.ComponentOfOrder" Role="ComponentOfOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ComponentOfOrder">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ComponentOfWorkPlace_WorkPlace">
+          <End Type="CorochinMCDBModel.WorkPlace" Role="WorkPlace" Multiplicity="1" />
+          <End Type="CorochinMCDBModel.ComponentOfWorkPlace" Role="ComponentOfWorkPlace" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkPlace">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ComponentOfWorkPlace">
+              <PropertyRef Name="WorkPlaceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_OrderStatus">
+          <End Type="CorochinMCDBModel.OrderStatus" Role="OrderStatus" Multiplicity="1" />
+          <End Type="CorochinMCDBModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="OrderStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_User">
+          <End Type="CorochinMCDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="CorochinMCDBModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CorochinMCDBModelStoreContainer" CdmEntityContainer="CorochinMCDBEntities">
+          <EntitySetMapping Name="Component">
+            <EntityTypeMapping TypeName="CorochinMCDBModel.Component">
+              <MappingFragment StoreEntitySet="Component">
+                <ScalarProperty Name="IsArchived" ColumnName="IsArchived" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ComponentOfOrder">
+            <EntityTypeMapping TypeName="CorochinMCDBModel.ComponentOfOrder">
+              <MappingFragment StoreEntitySet="ComponentOfOrder">
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="ComponentId" ColumnName="ComponentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ComponentOfWorkPlace">
+            <EntityTypeMapping TypeName="CorochinMCDBModel.ComponentOfWorkPlace">
+              <MappingFragment StoreEntitySet="ComponentOfWorkPlace">
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="ComponentId" ColumnName="ComponentId" />
+                <ScalarProperty Name="WorkPlaceId" ColumnName="WorkPlaceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order">
+            <EntityTypeMapping TypeName="CorochinMCDBModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="DateOfCreation" ColumnName="DateOfCreation" />
+                <ScalarProperty Name="OrderStatusId" ColumnName="OrderStatusId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="LastNameClient" ColumnName="LastNameClient" />
+                <ScalarProperty Name="FirstNameClient" ColumnName="FirstNameClient" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderStatus">
+            <EntityTypeMapping TypeName="CorochinMCDBModel.OrderStatus">
+              <MappingFragment StoreEntitySet="OrderStatus">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="CorochinMCDBModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="CorochinMCDBModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkPlace">
+            <EntityTypeMapping TypeName="CorochinMCDBModel.WorkPlace">
+              <MappingFragment StoreEntitySet="WorkPlace">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

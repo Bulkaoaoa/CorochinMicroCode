@@ -1,0 +1,32 @@
+﻿<Page x:Class="CorochinMCWPF.Pages.AddEditComponent"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CorochinMCWPF.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Добавление/редактирование компонента">
+
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="70" TextAlignment="Right" Text="Название:"></TextBlock>
+                <TextBox Width="200" Text="{Binding Name}" Name="TxtBoxName"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="70" TextAlignment="Right" Text="Цена:"></TextBlock>
+                <TextBox Width="200" Name="TxtBoxPrice" Text="{Binding Price, StringFormat={}{0:N2}}"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="70" TextAlignment="Right" Text="Описание:"></TextBlock>
+                <TextBox Width="200" TextWrapping="Wrap" Text="{Binding Descripiton}" Height="80" Name="TxtBoxDescription"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="70" TextAlignment="Right" Text="Количество:"></TextBlock>
+                <TextBox Width="200" Text="{Binding Count}" Name="TxtBoxCount"></TextBox>
+            </StackPanel>
+            <Button x:Name="BtnSave" Click="BtnSave_Click"></Button>
+        </StackPanel>
+    </Grid>
+</Page>

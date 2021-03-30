@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CorochinMCWPF"
         mc:Ignorable="d"
-        Title="MainWindow"  Style="{StaticResource MainWindowStyle}">
+        Title="{Binding ElementName=MainFrame, Path=Content.Title}" MinHeight="700" MinWidth="1000" Style="{StaticResource MainWindowStyle}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"></RowDefinition>
@@ -16,5 +16,7 @@
             <Button Width="100" VerticalAlignment="Center" Name="BtnBack" Content="Назад" Click="BtnBack_Click"></Button>
             <TextBlock VerticalAlignment="Center" Text="Фирма микрокод" Foreground="{StaticResource MainBlue}" FontWeight="Black" FontSize="30"></TextBlock>
         </StackPanel>
+
+        <Frame Grid.Row="1" Name="MainFrame" NavigationUIVisibility="Hidden" ContentRendered="MainFrame_ContentRendered"></Frame>
     </Grid>
 </Window>
