@@ -30,5 +30,10 @@ namespace CorochinMCWPF.Pages
         {
             AppData.MainFrame.Navigate(new Pages.ListOfComponentsPage());
         }
+
+        private void BtnOrders_Click(object sender, RoutedEventArgs e)
+        {
+            AppData.MainFrame.Navigate(new Pages.ListOfOrdersPage());
+        }
     }
 }

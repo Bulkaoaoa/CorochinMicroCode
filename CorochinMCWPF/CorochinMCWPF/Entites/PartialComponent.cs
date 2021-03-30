@@ -18,5 +18,7 @@ namespace CorochinMCWPF.Entites
                     return "Нет";
             }
         }
+
+        public int CountInOrder { get; set; }
     }
 }

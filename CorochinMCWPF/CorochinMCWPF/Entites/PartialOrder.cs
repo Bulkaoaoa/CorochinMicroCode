@@ -22,5 +22,26 @@ namespace CorochinMCWPF.Entites
                 return buffList;
             }
         }
+
+        public string FIOfClient
+        {
+            get
+            {
+                return $"{LastNameClient} {FirstNameClient}";
+            }
+        }
+
+        public decimal TotalPrice
+        {
+            get
+            {
+                decimal price = 0;
+                foreach (var item in AppData.Context.ComponentOfOrder.ToList().Where(p=>p.OrderId == Id).ToList())
+                {
+                    price += item.Count * item.Component.Price;
+                }
+                return price;
+            }
+        }
     }
 }
