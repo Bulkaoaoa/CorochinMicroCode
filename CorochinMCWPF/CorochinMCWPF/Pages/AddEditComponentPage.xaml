@@ -20,7 +20,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Width="70" TextAlignment="Right" Text="Описание:"></TextBlock>
-                <TextBox Width="200" TextWrapping="Wrap" Text="{Binding Descripiton}" Height="80" Name="TxtBoxDescription"></TextBox>
+                <TextBox Width="200" TextWrapping="Wrap" Text="{Binding Description}" Height="80" Name="TxtBoxDescription"></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Width="70" TextAlignment="Right" Text="Количество:"></TextBlock>

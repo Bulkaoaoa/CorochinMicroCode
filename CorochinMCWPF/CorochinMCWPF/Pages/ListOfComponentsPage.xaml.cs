@@ -84,6 +84,15 @@ namespace CorochinMCWPF.Pages
         private void DataGrdComponents_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             //Код на открытие окна с полной инфой о компоненте
+            var currComp = DataGrdComponents.SelectedItem as Component;
+            if (currComp != null)
+            {
+                Windows.ComponentWindow componentWindow = new Windows.ComponentWindow(currComp);
+                componentWindow.Owner = App.Current.MainWindow;
+                componentWindow.ShowDialog();
+            }
+            else
+                MessageBox.Show("Вы не выбрали элемент для просмотра", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error); ;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

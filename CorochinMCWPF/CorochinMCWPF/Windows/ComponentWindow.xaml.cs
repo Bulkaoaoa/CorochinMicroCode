@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CorochinMCWPF.Entites;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,15 @@ namespace CorochinMCWPF.Windows
     /// </summary>
     public partial class ComponentWindow : Window
     {
-        public ComponentWindow()
+        public ComponentWindow(Component currComponent)
         {
             InitializeComponent();
+            this.DataContext = currComponent;
+        }
+
+        private void BtnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -5,8 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CorochinMCWPF.Windows"
         mc:Ignorable="d"
-        Title="ComponentWindow" Height="450" Width="800">
+        Title="{Binding Name, StringFormat={}Информация о: {0}}" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" Height="350" Width="450">
     <Grid>
-        
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="70" Text="Название:" VerticalAlignment="Top" TextAlignment="Right"></TextBlock>
+                <TextBlock TextWrapping="Wrap" Width="300" Text="{Binding Name}"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="70" Text="Цена:" VerticalAlignment="Top" TextAlignment="Right"></TextBlock>
+                <TextBlock TextWrapping="Wrap" Width="300" Text="{Binding Price, StringFormat={}{0:N2}}"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="70" Text="Описание:" VerticalAlignment="Top" TextAlignment="Right"></TextBlock>
+                <TextBlock TextWrapping="Wrap" Width="300" Text="{Binding Description}"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="70" Text="Количество:" VerticalAlignment="Top" TextAlignment="Right"></TextBlock>
+                <TextBlock TextWrapping="Wrap" Width="300" Text="{Binding Count, StringFormat={}{0} шт.}"></TextBlock>
+            </StackPanel>
+            <Button Content="Закрыть" Width="200" Name="BtnClose" Click="BtnClose_Click"></Button>
+        </StackPanel>
     </Grid>
 </Window>
