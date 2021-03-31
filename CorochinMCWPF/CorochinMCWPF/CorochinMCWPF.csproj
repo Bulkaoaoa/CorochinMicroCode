@@ -70,8 +70,14 @@
     <Compile Include="Pages\ListOfOrdersPage.xaml.cs">
       <DependentUpon>ListOfOrdersPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ListOfWorkPlacePage.xaml.cs">
+      <DependentUpon>ListOfWorkPlacePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\ComponentWindow.xaml.cs">
       <DependentUpon>ComponentWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\WorkPlaceWindow.xaml.cs">
+      <DependentUpon>WorkPlaceWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -147,11 +153,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\ListOfWorkPlacePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\MainMenuPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\ComponentWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\WorkPlaceWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -75,13 +75,14 @@ namespace CorochinMCWPF.Pages
             {
                 if (result == MessageBoxResult.Yes)
                 {
+
                     foreach (var itemInOrder in AppData.Context.ComponentOfOrder.ToList().Where(p => p.OrderId == currOrder.Id).ToList())
                     {
                         foreach (var itemComponent in AppData.Context.Component.ToList())
                         {
                             if (itemComponent.Id == itemInOrder.ComponentId)
                             {
-                                itemInOrder.Count += itemInOrder.Count;
+                                itemComponent.Count += itemInOrder.Count;
                                 AppData.Context.SaveChanges();
                             }
                         }

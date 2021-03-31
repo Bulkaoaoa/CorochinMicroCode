@@ -12,7 +12,7 @@
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button Width="200" Content="Склад" Name="BtnWareHouse" Click="BtnWareHouse_Click"></Button>
             <Button Width="200" Content="Заказы" Name="BtnOrders" Click="BtnOrders_Click"></Button>
-            <Button Width="200" Content="Рабочие места" Name="BtnWorkPlace"></Button>
+            <Button Width="200" Content="Рабочие места" Name="BtnWorkPlace" Click="BtnWorkPlace_Click"></Button>
         </StackPanel>
     </Grid>
 </Page>
