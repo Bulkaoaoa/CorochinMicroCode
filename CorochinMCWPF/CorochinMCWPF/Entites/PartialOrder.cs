@@ -36,11 +36,35 @@ namespace CorochinMCWPF.Entites
             get
             {
                 decimal price = 0;
-                foreach (var item in AppData.Context.ComponentOfOrder.ToList().Where(p=>p.OrderId == Id).ToList())
+                foreach (var item in AppData.Context.ComponentOfOrder.ToList().Where(p => p.OrderId == Id).ToList())
                 {
                     price += item.Count * item.Component.Price;
                 }
                 return price;
+            }
+        }
+
+        public string FullStatus
+        {
+            get
+            {
+                var returnedValue = "";
+                switch (OrderStatusId)
+                {
+                    case 2:
+                        returnedValue = "Выполняется...";
+                        break;
+                    case 3:
+                        returnedValue = "Выполнен...";
+                        break;
+                    case 4:
+                        returnedValue = "Отменен...";
+                        break;
+                    default:
+                        returnedValue = "Произошла ошибка...";
+                        break;
+                }
+                return returnedValue;
             }
         }
     }

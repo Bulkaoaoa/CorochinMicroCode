@@ -34,7 +34,8 @@ namespace CorochinMCWPF.Pages
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
-            DataGrdOrders.ItemsSource = AppData.Context.Order.ToList().Where(p=>p.Id.ToString().Contains(TxtBoxSearch.Text.ToLower().Trim())).ToList();
+            DataGrdOrders.ItemsSource = AppData.Context.Order.ToList().Where(p => p.FirstNameClient.ToLower().Trim().Contains(TxtBoxSearch.Text.ToLower().Trim())
+            || p.LastNameClient.ToLower().Trim().Contains(TxtBoxSearch.Text.ToLower().Trim())).ToList();
         }
 
         private void BtnAddOrder_Click(object sender, RoutedEventArgs e)
@@ -44,16 +45,52 @@ namespace CorochinMCWPF.Pages
             {
                 item.CountInOrder = 0;
             }
-            AppData.MainFrame.Navigate(new Pages.AddEdit());
+            AppData.MainFrame.Navigate(new Pages.AddEditOrderPage());
         }
 
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
             //Вот тут надо будет добавлять CountOnOrder для компонентов как в приложении лунева
+            var currOrder = (sender as Button).DataContext as Order;
+            foreach (var itemInOrder in AppData.Context.ComponentOfOrder.ToList().Where(p => p.OrderId == currOrder.Id).ToList())
+            {
+                var currComponent = itemInOrder.Component;
+
+                foreach (var itemInContext in AppData.Context.Component.ToList())
+                {
+                    if (currComponent.Id == itemInContext.Id)
+                        itemInContext.CountInOrder = itemInOrder.Count;
+                }
+            }
+            AppData.MainFrame.Navigate(new Pages.AddEditOrderPage(currOrder));
         }
 
         private void BtnRemove_Click(object sender, RoutedEventArgs e)
         {
+            var result = MessageBox.Show("Вы уверены, что хотите отменить заказ?", "Вопрос", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var currOrder = (sender as Button).DataContext as Order;
+            if (currOrder.OrderStatusId == 4)
+                MessageBox.Show("Этот заказ уже отменен", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+            else
+            {
+                if (result == MessageBoxResult.Yes)
+                {
+                    foreach (var itemInOrder in AppData.Context.ComponentOfOrder.ToList().Where(p => p.OrderId == currOrder.Id).ToList())
+                    {
+                        foreach (var itemComponent in AppData.Context.Component.ToList())
+                        {
+                            if (itemComponent.Id == itemInOrder.ComponentId)
+                            {
+                                itemInOrder.Count += itemInOrder.Count;
+                                AppData.Context.SaveChanges();
+                            }
+                        }
+                        currOrder.OrderStatusId = 4;
+                        AppData.Context.SaveChanges();
+                    }
+                }
+                DataGrdOrders.ItemsSource = AppData.Context.Order.ToList();
+            }
 
         }
     }

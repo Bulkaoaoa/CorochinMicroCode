@@ -64,8 +64,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Pages\AddEdit.xaml.cs">
-      <DependentUpon>AddEdit.xaml</DependentUpon>
+    <Compile Include="Pages\AddEditOrderPage.xaml.cs">
+      <DependentUpon>AddEditOrderPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ListOfOrdersPage.xaml.cs">
       <DependentUpon>ListOfOrdersPage.xaml</DependentUpon>
@@ -127,11 +127,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\AddEdit.xaml">
+    <Page Include="Pages\AddEditComponentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\AddEditComponentPage.xaml">
+    <Page Include="Pages\AddEditOrderPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -22,8 +22,8 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Width="*" Header="Номер" Binding="{Binding Id}"></DataGridTextColumn>
                 <DataGridTextColumn Width="*" Header="Фамилия имя клиента" Binding="{Binding FIOfClient}"></DataGridTextColumn>
-                <DataGridTextColumn Width="*" Header="Статус" Binding="{Binding OrderStatus.Name}"></DataGridTextColumn>
-                <DataGridTextColumn Width="*" Header="Дата создания" Binding="{Binding DateOfCreation, StringFormat={}{0: dd:MM:yyyy}}"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Статус" Binding="{Binding FullStatus}"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Дата создания" Binding="{Binding DateOfCreation, StringFormat={}{0: dd-MM-yyyy}}"></DataGridTextColumn>
                 <DataGridTextColumn Width="*" Header="Общая цена" Binding="{Binding TotalPrice, StringFormat={}{0:N2}}"></DataGridTextColumn>
                 <DataGridTemplateColumn Width="100">
                     <DataGridTemplateColumn.CellTemplate>
